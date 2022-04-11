@@ -55,11 +55,11 @@ function checkWorkerScheduleExist($workerid) {
 
 	if($checkWorkerScheduleNN > 0)
 	{
-		return $checkWorkerScheduleRR[0]['shiftmasterid'];//Worker schedule already exist
+		return "exist"."||".$checkWorkerScheduleRR[0]['shiftmasterid'];//Worker schedule already exist
 	}
 	else
 	{
-		return "fail";
+		return "fail"."||0";
 	}
 }
 /*End: Check if worker schedule already exist in schedule master*/

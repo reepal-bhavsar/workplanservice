@@ -179,9 +179,12 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'addSchedule') {
 				deliveryResponse(400,'All the fields are required',NULL);
 		} else {
 				//Check if worker schedule already exist
-			$shiftMasterId = checkWorkerScheduleExist($workerId);
+			$shiftMasterResult = explode("||", checkWorkerScheduleExist($workerId));
+			
+			$status = $shiftMasterResult[0];//exist or fail(new user)
+			$shiftMasterId = $shiftMasterResult[1];//Shift Master Id or 0
 
-			if($shiftMasterId == 'fail') {
+			if($status == 'fail') {
 				$addIntoScheduleMaster = "INSERT INTO shift_master(userid)VALUES('$workerId')";
 				$addIntoScheduleMasterQQ = $conn->query($addIntoScheduleMaster);
 				if($addIntoScheduleMasterQQ) {
@@ -199,7 +202,7 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'addSchedule') {
 			if($addIntoWorkerScheduleQQ) {
 				deliveryResponse(200,'Worker schedule added successfully',NULL);
 			} else {
-				if($shiftMasterId == 0) {
+				if($status == 'fail') {
 					$deleteIntoScheduleMaster = "DELETE FROM shift_master WHERE userid = '$workerId'";
 					$deleteIntoScheduleMasterQQ = $conn->query($deleteIntoScheduleMaster);
 				}
@@ -229,7 +232,10 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'disablePreScheduledDays
 			}
 
 			//Check if worker schedule already exist
-			$shiftMasterId = checkWorkerScheduleExist($workerId);
+			$shiftMasterResult = explode("||", checkWorkerScheduleExist($workerId));
+			
+			$status = $shiftMasterResult[0];//exist or fail(new user)
+			$shiftMasterId = $shiftMasterResult[1];//Shift Master Id or 0
 
 			if($shiftMasterId>0) {
 				$tableName = $workerId."_worker_shift";
