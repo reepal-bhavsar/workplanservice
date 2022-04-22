@@ -98,10 +98,10 @@ if(!isset($_SESSION['uid'])) {
                         <label for="scheduletime" class="form-label">Schedule Time</label>
                         <div class="col-md-10">
                           <select class="form-select" id="scheduletime" aria-label="scheduletime">
-                            <option value="0" selected="">Select Time</option>
-                            <option value="1">0-8</option>
-                            <option value="2">8-16</option>
-                            <option value="3">16-24</option>
+                            <option value="0" selected="">Select Schedule Time</option>
+                            <option value="1">00:00-8:00</option>
+                            <option value="2">08:00-16:00</option>
+                            <option value="3">16:00-24:00</option>
                           </select>
                         </div>
                       </div>
